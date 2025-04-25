@@ -16,6 +16,7 @@ import LegalNotice from "./pages/LegalNotice";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
 import FAQ from "./pages/FAQ";
+import "@/i18n";
 
 const queryClient = new QueryClient();
 

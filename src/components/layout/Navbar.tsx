@@ -2,13 +2,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Menu, X, Search } from "lucide-react";
+import { ShoppingCart, Menu, X } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
+import LanguageSelector from "./LanguageSelector";
 
 const Navbar = () => {
   const { getCartItemsCount } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t } = useTranslation();
   const itemCount = getCartItemsCount();
 
   const toggleMenu = () => {
@@ -25,27 +28,21 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
           <Link to="/" className="text-sm font-medium hover:text-primary transition-colors">
-            Accueil
+            {t('nav.home')}
           </Link>
-          <Link
-            to="/catalog"
-            className="text-sm font-medium hover:text-primary transition-colors"
-          >
-            Catalogue
+          <Link to="/catalog" className="text-sm font-medium hover:text-primary transition-colors">
+            {t('nav.catalog')}
           </Link>
           <Link to="/contact" className="text-sm font-medium hover:text-primary transition-colors">
-            Contact
+            {t('nav.contact')}
           </Link>
         </nav>
 
         <div className="flex items-center space-x-4">
-          <Link 
-            to="/cart"
-            className="relative p-2 rounded-full hover:bg-secondary transition-colors"
-          >
+          <LanguageSelector />
+          <Link to="/cart" className="relative p-2 rounded-full hover:bg-secondary transition-colors">
             <ShoppingCart className="h-5 w-5" />
             {itemCount > 0 && (
               <span className="absolute top-0 right-0 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-primary rounded-full">
@@ -54,7 +51,6 @@ const Navbar = () => {
             )}
           </Link>
           
-          {/* Mobile menu button */}
           <Button
             variant="ghost"
             size="icon"
@@ -62,16 +58,11 @@ const Navbar = () => {
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
-            {isMenuOpen ? (
-              <X className="h-5 w-5" />
-            ) : (
-              <Menu className="h-5 w-5" />
-            )}
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
       <div
         className={cn(
           "fixed inset-0 top-16 z-40 w-full overflow-y-auto bg-white pb-12 md:hidden",
@@ -88,21 +79,21 @@ const Navbar = () => {
               className="block py-3 text-base font-medium hover:text-primary transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              Accueil
+              {t('nav.home')}
             </Link>
             <Link
               to="/catalog"
               className="block py-3 text-base font-medium hover:text-primary transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              Catalogue
+              {t('nav.catalog')}
             </Link>
             <Link
               to="/contact"
               className="block py-3 text-base font-medium hover:text-primary transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              Contact
+              {t('nav.contact')}
             </Link>
           </div>
         </div>
