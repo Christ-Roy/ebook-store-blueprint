@@ -1,6 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 interface Category {
   id: string;
@@ -18,9 +19,11 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
   selectedCategory,
   onCategoryChange,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="mb-8">
-      <h2 className="text-lg font-semibold mb-4">Catégories</h2>
+      <h2 className="text-lg font-semibold mb-4">{t('books.categories')}</h2>
       <div className="flex flex-wrap gap-2">
         {categories.map((category) => (
           <Button

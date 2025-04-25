@@ -2,17 +2,21 @@
 import React from "react";
 import BookCard from "./BookCard";
 import { Book } from "@/context/CartContext";
+import { useTranslation } from "react-i18next";
 
 interface BookGridProps {
   books: Book[];
   emptyMessage?: string;
 }
 
-const BookGrid: React.FC<BookGridProps> = ({ books, emptyMessage = "Aucun livre trouvé" }) => {
+const BookGrid: React.FC<BookGridProps> = ({ books, emptyMessage }) => {
+  const { t } = useTranslation();
+  const defaultEmptyMessage = t('books.notFound');
+
   if (books.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-muted-foreground">{emptyMessage}</p>
+        <p className="text-muted-foreground">{emptyMessage || defaultEmptyMessage}</p>
       </div>
     );
   }

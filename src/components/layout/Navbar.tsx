@@ -38,6 +38,9 @@ const Navbar = () => {
           <Link to="/contact" className="text-sm font-medium hover:text-primary transition-colors">
             {t('nav.contact')}
           </Link>
+          <Link to="/faq" className="text-sm font-medium hover:text-primary transition-colors">
+            {t('nav.faq')}
+          </Link>
         </nav>
 
         <div className="flex items-center space-x-4">
@@ -94,6 +97,13 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               {t('nav.contact')}
+            </Link>
+            <Link
+              to="/faq"
+              className="block py-3 text-base font-medium hover:text-primary transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {t('nav.faq')}
             </Link>
           </div>
         </div>

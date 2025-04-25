@@ -1,8 +1,12 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Hero = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="relative py-20 bg-gradient-to-br from-brand-700 to-brand-900 text-white">
       <div className="absolute inset-0 overflow-hidden">
@@ -12,13 +16,11 @@ const Hero = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="text-center md:text-left">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-              Des eBooks qui <br />
-              <span className="text-brand-200">transforment votre vie</span>
+              {t('home.hero.title')} <br />
+              <span className="text-brand-200">{t('home.hero.subtitle')}</span>
             </h1>
             <p className="mt-6 text-lg md:text-xl text-gray-200 max-w-xl mx-auto md:mx-0">
-              Découvrez notre collection de livres numériques premium pour
-              développer vos compétences, améliorer votre bien-être et atteindre
-              vos objectifs.
+              {t('home.hero.subtitle')}
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
               <Button
@@ -26,7 +28,7 @@ const Hero = () => {
                 size="lg"
                 className="bg-white text-primary hover:bg-gray-100 font-medium"
               >
-                <Link to="/catalog">Parcourir le catalogue</Link>
+                <Link to="/catalog">{t('home.hero.browse')}</Link>
               </Button>
               <Button
                 asChild
@@ -34,7 +36,7 @@ const Hero = () => {
                 size="lg"
                 className="border-white text-white hover:bg-white/10 font-medium"
               >
-                <Link to="#featured">Découvrir les nouveautés</Link>
+                <Link to="#featured">{t('home.hero.discover')}</Link>
               </Button>
             </div>
           </div>

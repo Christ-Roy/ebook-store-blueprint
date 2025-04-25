@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { CartItem as CartItemType } from "@/context/CartContext";
 import { X, Plus, Minus } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface CartItemProps {
   item: CartItemType;
@@ -12,10 +13,14 @@ interface CartItemProps {
 }
 
 const CartItem: React.FC<CartItemProps> = ({ item, onRemove, onUpdateQuantity }) => {
+  const { t, i18n } = useTranslation();
   const { book, quantity } = item;
   
   const formattedPrice = (price: number) => {
-    return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price);
+    return new Intl.NumberFormat(i18n.language === 'fr' ? 'fr-FR' : 'en-US', { 
+      style: 'currency', 
+      currency: 'EUR' 
+    }).format(price);
   };
 
   const price = book.discountPrice ?? book.price;
@@ -41,7 +46,7 @@ const CartItem: React.FC<CartItemProps> = ({ item, onRemove, onUpdateQuantity })
             </Link>
             <p className="ml-4 font-semibold">{formattedPrice(totalPrice)}</p>
           </div>
-          <p className="mt-1 text-sm text-muted-foreground">par {book.author}</p>
+          <p className="mt-1 text-sm text-muted-foreground">{t('books.by')} {book.author}</p>
           <p className="mt-1 text-sm">{book.format}</p>
         </div>
         
@@ -73,7 +78,7 @@ const CartItem: React.FC<CartItemProps> = ({ item, onRemove, onUpdateQuantity })
             onClick={() => onRemove(book.id)}
             className="text-muted-foreground hover:text-destructive"
           >
-            <X className="h-4 w-4 mr-1" /> Retirer
+            <X className="h-4 w-4 mr-1" /> {t('cart.remove')}
           </Button>
         </div>
       </div>
