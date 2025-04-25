@@ -33,6 +33,9 @@ const Footer = () => {
               <li>
                 <Link to="/cart" className="hover:underline">Panier</Link>
               </li>
+              <li>
+                <Link to="/faq" className="hover:underline">FAQ</Link>
+              </li>
             </ul>
           </div>
           
@@ -61,16 +64,16 @@ const Footer = () => {
             <h4 className="font-bold mb-4">Informations légales</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="#" className="hover:underline">Conditions générales de vente</Link>
+                <Link to="/terms" className="hover:underline">Conditions générales de vente</Link>
               </li>
               <li>
-                <Link to="#" className="hover:underline">Politique de confidentialité</Link>
+                <Link to="/privacy" className="hover:underline">Politique de confidentialité</Link>
               </li>
               <li>
-                <Link to="#" className="hover:underline">Mentions légales</Link>
+                <Link to="/legal" className="hover:underline">Mentions légales</Link>
               </li>
               <li>
-                <Link to="#" className="hover:underline">FAQ</Link>
+                <Link to="/faq" className="hover:underline">FAQ</Link>
               </li>
             </ul>
           </div>
