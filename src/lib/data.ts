@@ -17,7 +17,7 @@ export const books: Book[] = [
     pages: 245,
     format: "PDF, EPUB, MOBI",
     language: "Français",
-    excerpt: "Chapitre 1: Comprendre les bases de la bourse\n\nAvant de se lancer dans l'investissement boursier, il est essentiel de comprendre comment fonctionne ce marché. La bourse est un marché où s'échangent des actions, qui représentent des parts de propriété dans des entreprises..."
+    excerpt: "Chapitre 1: Comprendre les bases de la bourse\n\nAvant de se lancer dans l'investissement boursier, il est essentiel de comprendre comment fonctionne ce marché. La bourse est un marché où s'échangent des actions, qui représentent des parts de propriété dans des entreprises.\n\nLorsque vous achetez une action, vous devenez littéralement propriétaire d'une petite partie de l'entreprise. Cette propriété vous donne généralement deux avantages potentiels :\n\n1. Les dividendes : certaines entreprises distribuent régulièrement une partie de leurs bénéfices aux actionnaires.\n\n2. L'appréciation du capital : si la valeur de l'entreprise augmente avec le temps, le prix de vos actions augmente également.\n\nIl est important de distinguer l'investissement de la spéculation. L'investissement consiste à acheter des actions d'entreprises solides et à les conserver sur une longue période, tandis que la spéculation vise des profits rapides basés sur les fluctuations à court terme des prix.\n\nPour le débutant, l'investissement à long terme est généralement l'approche la plus sage..."
   },
   {
     id: "2",
@@ -31,7 +31,8 @@ export const books: Book[] = [
     rating: 4.6,
     pages: 180,
     format: "PDF, EPUB",
-    language: "Français"
+    language: "Français",
+    excerpt: "Chapitre 2: La méditation de pleine conscience\n\nLa méditation de pleine conscience (mindfulness) est probablement la forme de méditation la plus accessible pour les débutants. Elle consiste simplement à porter une attention bienveillante à l'instant présent, sans jugement.\n\nVoici un exercice simple pour commencer :\n\n1. Installez-vous confortablement dans un endroit calme. Vous pouvez être assis sur une chaise, un coussin ou même allongé.\n\n2. Fermez les yeux et portez doucement votre attention sur votre respiration. Remarquez les sensations du souffle qui entre et qui sort.\n\n3. Quand vous remarquez que votre esprit s'égare (ce qui est parfaitement normal), reconnaissez simplement que vous avez été distrait, puis ramenez gentiment votre attention à la respiration.\n\n4. Continuez pendant 5 minutes au début, puis augmentez progressivement jusqu'à 20 minutes.\n\nCe simple exercice, pratiqué régulièrement, peut avoir des effets profonds sur votre bien-être mental. Des études scientifiques ont démontré que la pleine conscience peut réduire le stress, l'anxiété et même soulager certains symptômes de dépression..."
   },
   {
     id: "3",
@@ -45,7 +46,8 @@ export const books: Book[] = [
     pages: 215,
     format: "PDF, EPUB",
     language: "Français",
-    newRelease: true
+    newRelease: true,
+    excerpt: "Chapitre 3: Les macronutriments essentiels\n\nPour construire une alimentation équilibrée, il est fondamental de comprendre les trois macronutriments principaux : les protéines, les lipides (graisses) et les glucides (hydrates de carbone).\n\nLes protéines sont les matériaux de construction de notre corps. Elles sont essentielles pour réparer et développer les tissus, ainsi que pour fabriquer des enzymes, des hormones et d'autres composés biochimiques. On les trouve principalement dans la viande, le poisson, les œufs, les produits laitiers, les légumineuses et certaines céréales.\n\nLes lipides, souvent diabolisés à tort, sont vitaux pour notre santé. Ils participent à la structure des membranes cellulaires, à l'absorption des vitamines liposolubles (A, D, E, K) et fournissent de l'énergie. Les bonnes sources incluent les huiles d'olive et de colza, les avocats, les noix et graines, et les poissons gras.\n\nLes glucides sont notre principale source d'énergie. On distingue les glucides simples (sucres) et complexes (amidon, fibres). Privilégiez les sources de glucides complexes comme les céréales complètes, les légumineuses et les légumes, qui libèrent leur énergie progressivement et contiennent davantage de nutriments..."
   },
   {
     id: "4",
@@ -58,7 +60,8 @@ export const books: Book[] = [
     rating: 4.5,
     pages: 120,
     format: "PDF",
-    language: "Français"
+    language: "Français",
+    excerpt: "Recette #12: Bowl protéiné aux légumes d'automne et quinoa\n\nCe bowl complet et coloré est parfait pour un déjeuner équilibré qui vous tiendra en énergie toute l'après-midi. Riche en protéines végétales, fibres et antioxydants, c'est un repas aussi beau que bon !\n\nIngrédients (pour 2 personnes) :\n- 120g de quinoa\n- 1 patate douce moyenne\n- 200g de chou kale\n- 1 avocat mûr\n- 100g de pois chiches cuits\n- 2 cuillères à soupe d'huile d'olive\n- 1 cuillère à café de cumin moulu\n- 1 citron (jus et zeste)\n- 2 cuillères à soupe de graines de courge\n- Sel et poivre\n\nPour la sauce tahini :\n- 2 cuillères à soupe de tahini (purée de sésame)\n- Le jus d'un demi-citron\n- 1 petite gousse d'ail écrasée\n- 2-3 cuillères à soupe d'eau\n- Sel, poivre\n\nPréparation :\n1. Préchauffer le four à 200°C.\n2. Rincer le quinoa et le cuire selon les instructions du paquet (généralement 15 minutes dans deux fois son volume d'eau).\n3. Couper la patate douce en cubes, mélanger avec 1 cuillère à soupe d'huile d'olive, du sel, du poivre et du cumin. Étaler sur une plaque de cuisson et enfourner pour 20-25 minutes jusqu'à ce qu'elle soit tendre.\n\nValeurs nutritionnelles (par portion) :\nCalories : 485 kcal\nProtéines : 15g\nLipides : 28g (dont saturés : 4g)\nGlucides : 45g (dont sucres : 8g)\nFibres : 12g"
   },
   {
     id: "5",
@@ -73,7 +76,8 @@ export const books: Book[] = [
     rating: 4.9,
     pages: 350,
     format: "PDF, EPUB",
-    language: "Français"
+    language: "Français",
+    excerpt: "Chapitre 4: Les structures de données en Python\n\nLes structures de données sont au cœur de la programmation. Python offre plusieurs types de structures intégrées qui vous permettront de stocker et d'organiser vos données efficacement.\n\n1. Les listes\n\nLes listes sont l'une des structures les plus utilisées en Python. Elles peuvent contenir différents types de données et sont modifiables (mutables).\n\n```python\n# Création d'une liste\nfruits = ['pomme', 'banane', 'orange']\n\n# Accéder à un élément (l'indexation commence à 0)\npremier_fruit = fruits[0]  # 'pomme'\n\n# Modifier un élément\nfruits[1] = 'kiwi'  # La liste devient ['pomme', 'kiwi', 'orange']\n\n# Ajouter un élément\nfruits.append('mangue')  # ['pomme', 'kiwi', 'orange', 'mangue']\n\n# Parcourir une liste\nfor fruit in fruits:\n    print(fruit)\n```\n\n2. Les dictionnaires\n\nLes dictionnaires stockent des paires clé-valeur, ce qui permet de récupérer rapidement des valeurs à partir de leurs clés.\n\n```python\n# Création d'un dictionnaire\npersonne = {\n    'nom': 'Dupont',\n    'prenom': 'Jean',\n    'age': 35,\n    'ville': 'Paris'\n}\n\n# Accéder à une valeur\nnom = personne['nom']  # 'Dupont'\n\n# Modifier une valeur\npersonne['age'] = 36\n\n# Ajouter une nouvelle paire clé-valeur\npersonne['profession'] = 'Ingénieur'\n\n# Parcourir un dictionnaire\nfor cle, valeur in personne.items():\n    print(f\"{cle}: {valeur}\")\n```\n\nCes structures de données vous permettront de résoudre efficacement un large éventail de problèmes de programmation..."
   },
   {
     id: "6",
@@ -87,7 +91,8 @@ export const books: Book[] = [
     pages: 280,
     format: "PDF, EPUB, MOBI",
     language: "Français",
-    newRelease: true
+    newRelease: true,
+    excerpt: "Chapitre 1: La mentalité de l'entrepreneur à succès\n\nCe qui distingue les entrepreneurs qui réussissent de ceux qui échouent n'est souvent pas leur idée initiale, leur formation ou même leur réseau. C'est leur mentalité.\n\nLa résilience face à l'échec est peut-être la caractéristique la plus importante. Prenons l'exemple de James Dyson, qui a créé 5 126 prototypes avant de mettre au point son premier aspirateur cyclonique fonctionnel. Ou celui de Sara Blakely, fondatrice de Spanx, qui a été rejetée par tous les fabricants qu'elle a approchés au début.\n\nCe qui unit ces histoires, c'est la persévérance face à l'adversité. Ces entrepreneurs ont transformé chaque échec en leçon, chaque refus en opportunité d'amélioration.\n\nUne autre caractéristique essentielle est la capacité à embrasser l'incertitude. L'entrepreneuriat n'est pas un chemin linéaire avec des étapes clairement définies. C'est un parcours chaotique qui nécessite des ajustements constants.\n\nEnfin, les entrepreneurs à succès développent ce que Carol Dweck appelle un \"état d'esprit de croissance\" (growth mindset). Ils croient que leurs capacités peuvent être développées par le travail et l'apprentissage, plutôt que d'être des traits fixes et immuables.\n\nDans les prochains chapitres, nous explorerons comment cultiver ces caractéristiques mentales et les transformer en actions concrètes pour faire prospérer votre entreprise..."
   },
   {
     id: "7",
@@ -100,7 +105,8 @@ export const books: Book[] = [
     rating: 4.6,
     pages: 210,
     format: "PDF, EPUB",
-    language: "Français"
+    language: "Français",
+    excerpt: "Chapitre 5: Créer une stratégie de contenu qui convertit\n\nEn tant que freelance, votre contenu est souvent le premier contact que les clients potentiels ont avec vous. C'est votre vitrine virtuelle, votre démonstration d'expertise, et ultimement, votre outil de conversion le plus puissant.\n\nLa règle des 80/20 s'applique parfaitement au marketing de contenu : 80% de votre contenu devrait apporter de la valeur gratuitement, et seulement 20% devrait promouvoir directement vos services.\n\nCommencez par définir votre client idéal avec précision. Quels sont ses défis quotidiens ? Quelles questions se pose-t-il ? Quelles sont ses aspirations ? Votre contenu doit répondre à ces interrogations et démontrer que vous comprenez profondément ses besoins.\n\nVoici quelques formats de contenu particulièrement efficaces pour les freelances :\n\n- Les études de cas détaillées qui racontent comment vous avez résolu un problème pour un client précédent\n- Les guides pratiques et tutoriels qui montrent votre expertise\n- Les newsletters qui maintiennent le contact avec votre audience\n- Les témoignages clients qui renforcent votre crédibilité\n\nN'oubliez pas d'inclure des appels à l'action (CTA) clairs dans votre contenu. Que voulez-vous que le lecteur fasse après avoir consommé votre contenu ? Prendre rendez-vous pour une consultation ? S'inscrire à votre newsletter ? Télécharger un guide gratuit ?\n\nEnfin, la régularité est essentielle. Un blog mis à jour tous les trois mois envoie un message négatif. Mieux vaut publier moins souvent mais de façon constante..."
   },
   {
     id: "8",
@@ -115,7 +121,8 @@ export const books: Book[] = [
     rating: 4.8,
     pages: 230,
     format: "PDF, EPUB",
-    language: "Français"
+    language: "Français",
+    excerpt: "Chapitre 3: Les cinq phases d'une négociation réussie\n\nToute négociation efficace, qu'elle concerne un contrat commercial majeur ou l'achat d'une voiture d'occasion, suit généralement cinq phases distinctes. Maîtriser chacune d'elles vous donnera un avantage considérable.\n\n1. La préparation\n\nC'est sans doute la phase la plus déterminante et pourtant la plus négligée. Une bonne préparation implique de :\n- Définir clairement vos objectifs (idéaux et minimaux)\n- Rechercher des informations sur l'autre partie\n- Anticiper leurs arguments et objections\n- Préparer plusieurs scénarios et solutions alternatives\n- Identifier votre BATNA (Best Alternative To a Negotiated Agreement - meilleure solution de repli)\n\nUn négociateur qui arrive préparé a déjà gagné une grande partie de la bataille.\n\n2. L'ouverture\n\nLes premières minutes d'une négociation établissent le ton et peuvent influencer l'ensemble du processus. Commencez par établir un rapport, démontrer votre professionnalisme et clarifier le cadre de la discussion.\n\nLa question de qui fait la première offre est stratégique. Contrairement à une idée reçue, faire la première offre peut vous donner un avantage en créant un \"ancrage\" psychologique autour duquel tournera la négociation.\n\n3. L'exploration\n\nCette phase consiste à comprendre les intérêts sous-jacents de l'autre partie, au-delà de leurs positions déclarées. Posez des questions ouvertes, écoutez activement, et cherchez à identifier :\n- Leurs véritables besoins et contraintes\n- Leurs priorités\n- Les zones potentielles de compromis\n\nRappelez-vous que la meilleure négociation n'est pas celle où vous gagnez tout, mais celle où les deux parties trouvent satisfaction..."
   },
   {
     id: "9",
@@ -132,7 +139,7 @@ export const books: Book[] = [
     pages: 320,
     format: "PDF, EPUB, MOBI",
     language: "Français",
-    excerpt: "Chapitre 1: L'IA comme levier de croissance\n\nL'intelligence artificielle n'est plus un concept futuriste réservé aux grandes entreprises technologiques. Aujourd'hui, des outils accessibles permettent même aux petites structures d'exploiter la puissance de l'IA pour transformer leur activité..."
+    excerpt: "Chapitre 1: L'IA comme levier de croissance\n\nL'intelligence artificielle n'est plus un concept futuriste réservé aux grandes entreprises technologiques. Aujourd'hui, des outils accessibles permettent même aux petites structures d'exploiter la puissance de l'IA pour transformer leur activité.\n\nPrenons l'exemple de Thomas, propriétaire d'une boutique en ligne de produits artisanaux. Avant d'intégrer l'IA, il passait des heures à répondre manuellement aux questions des clients. En implémentant un chatbot basique entraîné sur ses FAQ, il a automatisé 70% des demandes courantes. Résultat : un temps précieux libéré pour se concentrer sur le développement de son catalogue et une satisfaction client améliorée grâce à des réponses instantanées 24h/24.\n\nOu celui de Marie, consultante indépendante, qui utilise désormais des outils d'IA pour analyser les transcriptions de ses appels clients et identifier les tendances et préoccupations récurrentes. Cette analyse lui permet d'affiner son offre et son discours commercial de façon beaucoup plus précise qu'auparavant.\n\nL'IA offre trois principaux leviers de croissance pour les entrepreneurs :\n\n1. L'automatisation des tâches répétitives\n2. L'analyse de données pour une meilleure prise de décision\n3. La personnalisation de l'expérience client à grande échelle\n\nDans ce livre, nous explorerons ces trois axes en détail, avec des exemples concrets et des étapes précises pour intégrer l'IA dans votre activité, même avec un budget limité et sans expertise technique préalable..."
   },
   {
     id: "10",
@@ -146,7 +153,8 @@ export const books: Book[] = [
     pages: 285,
     format: "PDF, EPUB",
     language: "Français",
-    newRelease: true
+    newRelease: true,
+    excerpt: "Chapitre 2: Comprendre l'écosystème crypto en 2025\n\nL'écosystème des crypto-monnaies a considérablement évolué depuis les premiers jours du Bitcoin. En 2025, nous assistons à une maturité croissante du marché, avec une segmentation claire entre différents types d'actifs numériques.\n\nLes \"Blue Chips\" de la crypto\n\nBitcoin continue de dominer en tant que réserve de valeur numérique, souvent comparé à \"l'or numérique\". Sa rareté programmée (avec un plafond de 21 millions de bitcoins) et sa solidité éprouvée en font un choix privilégié pour les investisseurs plus conservateurs dans l'espace crypto.\n\nEthereum s'est confirmé comme l'infrastructure dominante pour la finance décentralisée (DeFi) et les applications Web3, malgré la concurrence de blockchains alternatives. Son passage réussi à la preuve d'enjeu (Proof of Stake) a considérablement réduit son empreinte énergétique, un point qui était auparavant critiqué.\n\nL'essor de la Finance Décentralisée (DeFi)\n\nLa DeFi représente désormais un secteur mature avec plus de 300 milliards de dollars d'actifs verrouillés sur diverses plateformes. Les protocoles de prêt, d'échange décentralisé et d'assurance fonctionnent maintenant avec une efficacité comparable aux institutions financières traditionnelles, mais avec des frais réduits et une accessibilité mondiale.\n\nRisques et régulation\n\nLe cadre réglementaire s'est considérablement clarifié depuis 2023. La plupart des juridictions importantes ont maintenant établi des règles spécifiques pour les crypto-actifs, ce qui a paradoxalement favorisé l'adoption institutionnelle. Les investisseurs doivent néanmoins rester vigilants face aux risques inhérents à cette classe d'actifs volatile et parfois complexe..."
   },
   {
     id: "11",
@@ -159,7 +167,8 @@ export const books: Book[] = [
     rating: 4.8,
     pages: 248,
     format: "PDF, EPUB",
-    language: "Français"
+    language: "Français",
+    excerpt: "Chapitre 4: Yoga pour soulager les douleurs dorsales\n\nLes douleurs de dos touchent près de 80% des adultes à un moment de leur vie. Le yoga thérapeutique offre une approche holistique pour soulager ces douleurs et prévenir leur réapparition.\n\nComprendre les douleurs dorsales\n\nAvant de pratiquer, il est essentiel de comprendre la nature de vos douleurs. Les tensions lombaires, les problèmes de disques intervertébraux ou les déséquilibres musculaires nécessitent des approches légèrement différentes. Consultez un professionnel de santé pour identifier l'origine de vos douleurs.\n\nPrincipes fondamentaux pour la pratique\n\n- Écoutez votre corps : la douleur aiguë est un signal d'alerte à respecter\n- Pratiquez la respiration consciente lors de chaque posture\n- Privilégiez l'alignement correct plutôt que l'amplitude du mouvement\n- Maintenez l'engagement du centre (muscles profonds abdominaux) pour protéger le dos\n\nSéquence pour lombaires sensibles\n\n1. Apanasana (genoux vers la poitrine) : Allongé sur le dos, amenez doucement vos genoux vers votre poitrine. Tenez 30 secondes en respirant profondément, en sentant l'étirement du bas du dos.\n\n2. Supta Matsyendrasana modifiée (torsion allongée) : Toujours sur le dos, genoux pliés, laissez vos genoux tomber d'un côté tout en gardant les épaules au sol. Maintenez 30-60 secondes de chaque côté.\n\n3. Marjaryasana-Bitilasana (chat-vache) : À quatre pattes, alternez entre l'arrondi du dos (chat) et son extension (vache), en synchronisant le mouvement avec la respiration. Répétez 10 fois lentement.\n\n4. Balasana (posture de l'enfant) : Asseyez-vous sur vos talons, puis penchez-vous en avant, bras étendus ou le long du corps. Reposez-vous dans cette posture pendant 1-2 minutes.\n\nPratique régulière\n\nPour des résultats optimaux, pratiquez cette séquence quotidiennement, idéalement le matin pour préparer votre dos aux activités de la journée, et le soir pour relâcher les tensions accumulées..."
   },
   {
     id: "12",
@@ -174,7 +183,8 @@ export const books: Book[] = [
     rating: 4.6,
     pages: 195,
     format: "PDF, EPUB",
-    language: "Français"
+    language: "Français",
+    excerpt: "Chapitre 7: Créer une stratégie de contenu qui vous démarque\n\nLe contenu est au cœur de votre succès sur les réseaux sociaux. Mais dans un océan de créateurs, comment se démarquer et captiver votre audience ?\n\nLa règle des 3C : Clarté, Cohérence, Constance\n\nLa clarté concerne votre message et votre positionnement. Votre audience doit comprendre immédiatement qui vous êtes et ce que vous apportez. Par exemple, si vous êtes expert en fitness, précisez votre niche : est-ce le fitness pour jeunes mamans, l'entraînement de force pour seniors, ou les exercices sans équipement pour voyageurs ?\n\nLa cohérence s'applique à votre esthétique visuelle, à votre ton et à vos valeurs. Les comptes qui maintiennent une identité visuelle reconnaissable (palette de couleurs, style de photographie, éléments graphiques) créent une empreinte mémorielle plus forte. Même chose pour votre voix : décidez si votre ton est éducatif, inspirant, humoristique ou provocateur, et tenez-vous-y.\n\nLa constance concerne votre rythme de publication. Il vaut mieux publier trois contenus par semaine sans faute que dix contenus une semaine puis disparaître le mois suivant. Utilisez les outils de planification pour maintenir cette régularité même quand vous êtes occupé.\n\nLa formule du contenu à forte valeur ajoutée\n\nLe contenu qui performe le mieux combine généralement trois éléments :\n\n1. Utilité : apporte une solution à un problème ou une réponse à une question\n2. Émotion : suscite une réaction émotionnelle (inspiration, surprise, amusement)\n3. Originalité : présente une perspective unique ou un format différenciant\n\nPar exemple, plutôt que de simplement partager une recette de smoothie (utilité basique), vous pourriez créer une série \"Smoothies de survie pour parents débordés\" qui combine des recettes ultra-rapides (utilité) avec un ton humoristique sur le chaos matinal des familles (émotion) dans un format avant/après visuellement saisissant (originalité)..."
   },
   {
     id: "13",
@@ -187,7 +197,8 @@ export const books: Book[] = [
     rating: 4.7,
     pages: 230,
     format: "PDF, EPUB",
-    language: "Français"
+    language: "Français",
+    excerpt: "Chapitre 2: La structure AIDA - Le fondement de tout copywriting efficace\n\nLa structure AIDA (Attention, Intérêt, Désir, Action) est l'un des modèles les plus éprouvés en copywriting. Créée à la fin du 19ème siècle, elle reste étonnamment pertinente à l'ère numérique.\n\nAttention\n\nVotre premier défi est de capter l'attention dans un monde saturé d'informations. Vous avez généralement moins de 3 secondes pour y parvenir. Les techniques efficaces incluent :\n\n- Le titre provocateur : \"Pourquoi 90% des régimes échouent (et comment faire partie des 10%)\"\n- La question directe : \"Êtes-vous en train de commettre cette erreur coûteuse dans votre stratégie SEO ?\"\n- Le chiffre frappant : \"7 millionnaires sur 10 n'ont jamais fait d'études supérieures\"\n- L'histoire personnelle : \"J'ai perdu mon emploi un lundi. Le vendredi, j'avais lancé une entreprise rentable\"\n\nIntérêt\n\nUne fois l'attention captée, vous devez rapidement susciter l'intérêt en montrant que vous comprenez les problèmes ou aspirations de votre lecteur. C'est le moment d'établir une connexion émotionnelle.\n\n\"Vous connaissez cette sensation : vous fixez l'écran de votre ordinateur, essayant désespérément de rédiger un email important, mais les mots ne viennent pas. Chaque phrase semble plate, sans impact. Pendant ce temps, votre concurrent envoie des messages qui incitent ses clients à agir immédiatement...\"\n\nDésir\n\nC'est ici que vous transformez l'intérêt en désir en présentant votre solution et ses bénéfices (pas seulement ses caractéristiques). Utilisez un langage sensoriel et des exemples concrets de résultats.\n\n\"Imaginez pouvoir ouvrir votre boîte mail chaque matin et voir des notifications de ventes réalisées pendant votre sommeil. Imaginez des clients qui vous contactent spontanément parce qu'ils ont été captivés par votre page d'accueil. Ce n'est pas un rêve inaccessible, c'est ce que mes clients vivent après avoir appliqué les 5 principes que je vais vous révéler...\"\n\nAction\n\nEnfin, vous devez guider clairement votre lecteur vers l'action souhaitée avec un appel à l'action (CTA) puissant et sans ambiguïté..."
   },
   {
     id: "14",
@@ -200,7 +211,8 @@ export const books: Book[] = [
     rating: 4.5,
     pages: 186,
     format: "PDF, EPUB, MOBI",
-    language: "Français"
+    language: "Français",
+    excerpt: "Chapitre 3: Micro-pratiques de pleine conscience\n\n\"Je n'ai pas le temps de méditer.\" C'est probablement l'objection la plus courante que j'entends dans mes ateliers. Et c'est précisément pourquoi les micro-pratiques sont si précieuses : elles s'intègrent dans les interstices de votre journée, sans nécessiter de bouleverser votre emploi du temps.\n\nLa respiration 3-4-5\n\nCette technique simple peut être pratiquée n'importe où : dans les transports, avant une réunion importante, ou même pendant une conversation difficile.\n\n1. Inspirez pendant 3 secondes\n2. Retenez votre souffle pendant 4 secondes\n3. Expirez pendant 5 secondes\n\nRépétez ce cycle 3 à 5 fois. En allongeant l'expiration par rapport à l'inspiration, vous activez votre système nerveux parasympathique, responsable de la détente et de la récupération.\n\nLe scan corporel express\n\nEn position assise ou debout :\n\n1. Fermez les yeux si possible, ou baissez simplement le regard\n2. Portez votre attention sur vos pieds et remarquez les sensations présentes\n3. Remontez progressivement - jambes, bassin, abdomen, poitrine, dos, épaules, bras, mains, cou, visage\n4. À chaque zone, observez simplement les sensations sans jugement\n\nCe scan peut prendre aussi peu que 60 secondes ou s'étendre à 3-4 minutes selon votre disponibilité.\n\nL'ancrage par les sens\n\nCet exercice est particulièrement utile lors de moments de stress ou d'anxiété. Il s'agit d'observer :\n\n- 5 choses que vous pouvez voir\n- 4 choses que vous pouvez toucher ou sentir physiquement\n- 3 choses que vous pouvez entendre\n- 2 choses que vous pouvez sentir (odeurs)\n- 1 chose que vous pouvez goûter\n\nEn engageant consciemment vos cinq sens, vous vous ancrez fermement dans le présent, loin des ruminations sur le passé ou des inquiétudes concernant le futur..."
   },
   {
     id: "15",
@@ -215,7 +227,8 @@ export const books: Book[] = [
     pages: 415,
     format: "PDF, EPUB",
     language: "Français",
-    newRelease: true
+    newRelease: true,
+    excerpt: "Chapitre 6: Les hooks React - Une révolution dans la gestion d'état\n\nL'introduction des hooks dans React 16.8 a fondamentalement changé la façon dont nous construisons des composants. Ils permettent d'utiliser l'état et d'autres fonctionnalités de React sans écrire de classe. Voyons comment ils transforment notre code.\n\nDu composant classe au composant fonctionnel\n\nConsidérons un compteur simple en classe :\n\n```jsx\nclass Counter extends React.Component {\n  constructor(props) {\n    super(props);\n    this.state = { count: 0 };\n    this.increment = this.increment.bind(this);\n  }\n  \n  increment() {\n    this.setState({ count: this.state.count + 1 });\n  }\n  \n  render() {\n    return (\n      <div>\n        <p>Vous avez cliqué {this.state.count} fois</p>\n        <button onClick={this.increment}>Cliquez ici</button>\n      </div>\n    );\n  }\n}\n```\n\nVoici le même composant avec les hooks :\n\n```jsx\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  \n  return (\n    <div>\n      <p>Vous avez cliqué {count} fois</p>\n      <button onClick={() => setCount(count + 1)}>Cliquez ici</button>\n    </div>\n  );\n}\n```\n\nLes avantages sont évidents : le code est plus concis, plus lisible, et la logique de gestion d'état est clairement isolée.\n\nLe hook useEffect\n\nUn autre hook fondamental est useEffect, qui remplace les méthodes de cycle de vie comme componentDidMount, componentDidUpdate et componentWillUnmount.\n\n```jsx\nfunction UserProfile({ userId }) {\n  const [user, setUser] = useState(null);\n  const [loading, setLoading] = useState(true);\n  \n  useEffect(() => {\n    // Équivalent à componentDidMount et componentDidUpdate\n    setLoading(true);\n    fetch(`https://api.example.com/users/${userId}`)\n      .then(response => response.json())\n      .then(data => {\n        setUser(data);\n        setLoading(false);\n      });\n      \n    // Fonction de nettoyage (équivalent à componentWillUnmount)\n    return () => {\n      // Annuler des requêtes ou nettoyer des abonnements\n    };\n  }, [userId]); // Dépendances : l'effet se réexécute si userId change\n  \n  if (loading) return <p>Chargement...</p>;\n  return <div>{user.name}</div>;\n}\n```\n\nLe tableau de dépendances ici est crucial : il détermine quand l'effet doit être réexécuté. Un tableau vide signifie \"exécuter seulement après le premier rendu\", tandis que l'absence de tableau signifie \"exécuter après chaque rendu\"..."
   },
   {
     id: "16",
@@ -229,7 +242,8 @@ export const books: Book[] = [
     pages: 330,
     format: "PDF, EPUB, MOBI",
     language: "Français",
-    featured: true
+    featured: true,
+    excerpt: "Chapitre 5: La méthode des cash-flows pour évaluer la rentabilité\n\nNombre d'investisseurs immobiliers débutants commettent l'erreur de se concentrer uniquement sur le rendement brut d'un bien. Cette approche simpliste peut conduire à de sérieuses désillusions. La méthode des cash-flows permet une évaluation beaucoup plus précise et réaliste de la rentabilité d'un investissement.\n\nQu'est-ce que le cash-flow?\n\nLe cash-flow représente le flux de trésorerie généré par votre investissement, soit la différence entre vos revenus locatifs et l'ensemble de vos charges. Un cash-flow positif signifie que vous dégagez un bénéfice mensuel après avoir payé toutes vos charges, y compris votre crédit immobilier.\n\nCalcul détaillé du cash-flow\n\nPrenons l'exemple d'un appartement de 65m² acheté 180 000€ dans une ville moyenne française :\n\nRevenus :\n- Loyer mensuel : 750€\n\nCharges :\n- Mensualité de crédit (prêt sur 20 ans à 1,8%) : 485€\n- Taxe foncière mensuelle : 75€\n- Charges de copropriété non récupérables : 40€\n- Assurance propriétaire non occupant : 20€\n- Provision pour vacance locative (5% du loyer) : 37,5€\n- Provision pour travaux (5% du loyer) : 37,5€\n- Frais de gestion locative (8% du loyer) : 60€\n\nTotal des charges mensuelles : 755€\n\nCash-flow mensuel : -5€\n\nCet investissement génère donc un cash-flow légèrement négatif, ce qui n'en fait pas nécessairement un mauvais investissement (la valeur du bien peut s'apprécier, et le remboursement du capital constitue une forme d'épargne forcée), mais il ne vous procurera pas de revenu passif immédiat.\n\nLa règle du 1%\n\nUn indicateur simple mais efficace : pour obtenir un cash-flow positif, le loyer mensuel devrait idéalement représenter au moins 1% du prix d'achat total (incluant les frais de notaire et les éventuels travaux). Dans notre exemple, cela signifierait un loyer d'environ 1 800€, ce qui est irréaliste pour ce type de bien.\n\nC'est pourquoi de nombreux investisseurs expérimentés se tournent vers des stratégies spécifiques pour améliorer cette équation..."
   }
 ];
 
