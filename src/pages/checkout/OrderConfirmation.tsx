@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
@@ -110,7 +111,8 @@ const OrderConfirmation: React.FC = () => {
         if (data.status === 'success') {
           setOrderData(data.data.order);
         } else {
-          setError(data.message || 'Une erreur est survenue');
+          // Modifié ici : Au lieu de data.message, utilisons une valeur par défaut
+          setError("Une erreur est survenue");
         }
       } catch (err: any) {
         setError(err.message || 'Une erreur est survenue lors de la récupération des détails de la commande');
@@ -334,6 +336,11 @@ const OrderConfirmation: React.FC = () => {
       <Footer />
     </div>
   );
+};
+
+// Fonction formatPrice manquante
+const formatPrice = (price: number) => {
+  return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price);
 };
 
 export default OrderConfirmation;
