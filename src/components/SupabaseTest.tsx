@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
@@ -13,8 +13,8 @@ const SupabaseTest = () => {
     // Test Supabase connection
     const testConnection = async () => {
       try {
-        // Simple query to test connection
-        const { data, error } = await supabase.from('_alive').select('*').limit(1);
+        // Simple query to test connection using our test_connection table
+        const { data, error } = await supabase.from('test_connection').select('*').limit(1);
         
         if (error) {
           console.error("Connection error:", error);
