@@ -7,15 +7,16 @@ import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/context/AuthContext";
 
 const formSchema = z.object({
   email: z.string().email("Email invalide"),
   password: z.string().min(6, "Le mot de passe doit contenir au moins 6 caractères"),
+  fullName: z.string().optional(),
 });
 
 const SignUpForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const { signUp, isLoading } = useAuth();
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -23,37 +24,35 @@ const SignUpForm = () => {
     defaultValues: {
       email: "",
       password: "",
+      fullName: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setIsLoading(true);
     try {
-      const { error } = await supabase.auth.signUp({
-        email: values.email,
-        password: values.password,
-      });
-
-      if (error) throw error;
-
-      toast({
-        title: "Inscription réussie",
-        description: "Vérifiez votre email pour confirmer votre compte.",
-      });
+      await signUp(values.email, values.password, values.fullName);
+      form.reset();
     } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Erreur",
-        description: "Une erreur est survenue lors de l'inscription.",
-      });
-    } finally {
-      setIsLoading(false);
+      // L'erreur est déjà gérée dans le contexte d'authentification
     }
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full max-w-md">
+        <FormField
+          control={form.control}
+          name="fullName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nom complet</FormLabel>
+              <FormControl>
+                <Input placeholder="Jean Dupont" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="email"

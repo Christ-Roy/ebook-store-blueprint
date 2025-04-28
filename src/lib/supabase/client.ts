@@ -1,9 +1,11 @@
+
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = 'https://aprfxxpbspithskqthet.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFwcmZ4eHBic3BpdGhza3F0aGV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3OTIyMTUsImV4cCI6MjA2MTM2ODIxNX0.F3GDIPIfAhX6JVZ-VJhYITLnAwtCK3L8F6UlkOijYik';
+// Récupérer les variables d'environnement de Supabase depuis Lovable
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// Création du client Supabase
+// Création du client Supabase avec les bonnes variables d'environnement
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Types pour les utilisateurs
