@@ -1,22 +1,37 @@
 
 import { createClient } from '@supabase/supabase-js';
+import { toast } from 'sonner';
 
-// Récupérer les variables d'environnement de Supabase depuis Lovable
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// Use the direct Supabase URL and anon key from the integrations folder
+import { supabase as integrationSupabase } from '@/integrations/supabase/client';
 
-// Vérifier si les variables d'environnement sont définies
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error("Les variables d'environnement Supabase ne sont pas définies. Veuillez vous connecter à votre projet Supabase dans l'interface de Lovable.");
-}
+// Create a more robust client that handles potential issues
+const createRobustClient = () => {
+  try {
+    // First try to use the integration client directly
+    return integrationSupabase;
+  } catch (error) {
+    console.error("Error using integration Supabase client:", error);
+    
+    // Fallback to creating a client with fixed values if needed
+    const SUPABASE_URL = "https://aprfxxpbspithskqthet.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFwcmZ4eHBic3BpdGhza3F0aGV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3OTIyMTUsImV4cCI6MjA2MTM2ODIxNX0.F3GDIPIfAhX6JVZ-VJhYITLnAwtCK3L8F6UlkOijYik";
+    
+    if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+      console.error("Supabase environment variables are missing");
+      toast.error("Supabase configuration is incomplete");
+      // Return a dummy client to avoid breaking the app
+      return createClient('https://placeholder-url.supabase.co', 'placeholder-key');
+    }
+    
+    return createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+};
 
-// Création du client Supabase avec gestion des cas où les variables seraient non définies
-export const supabase = createClient(
-  supabaseUrl || 'https://placeholder-url.supabase.co', 
-  supabaseAnonKey || 'placeholder-key'
-);
+// Export the supabase client
+export const supabase = createRobustClient();
 
-// Types pour les utilisateurs
+// Types for users
 export type UserType = {
   id: string;
   email: string;
