@@ -1,16 +1,19 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Menu, X, LogIn } from "lucide-react";
+import { ShoppingCart, Menu, X, LogIn, User } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "./LanguageSelector";
+import { useAuth } from "@/context/AuthContext";
 
 const Navbar = () => {
   const { getCartItemsCount } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { t } = useTranslation();
+  const { user } = useAuth();
   const itemCount = getCartItemsCount();
 
   const toggleMenu = () => {
@@ -44,10 +47,19 @@ const Navbar = () => {
 
         <div className="flex items-center space-x-4">
           <LanguageSelector />
-          <Link to="/auth" className="flex items-center space-x-2 hover:text-primary transition-colors">
-            <LogIn className="h-5 w-5" />
-            <span className="hidden md:inline">{t('nav.login')}</span>
-          </Link>
+          
+          {user ? (
+            <Link to="/profile" className="flex items-center space-x-2 hover:text-primary transition-colors">
+              <User className="h-5 w-5" />
+              <span className="hidden md:inline">{t('nav.profile')}</span>
+            </Link>
+          ) : (
+            <Link to="/auth" className="flex items-center space-x-2 hover:text-primary transition-colors">
+              <LogIn className="h-5 w-5" />
+              <span className="hidden md:inline">{t('nav.login')}</span>
+            </Link>
+          )}
+          
           <Link to="/cart" className="relative p-2 rounded-full hover:bg-secondary transition-colors">
             <ShoppingCart className="h-5 w-5" />
             {itemCount > 0 && (
@@ -108,13 +120,23 @@ const Navbar = () => {
             >
               {t('nav.faq')}
             </Link>
-            <Link
-              to="/auth"
-              className="block py-3 text-base font-medium hover:text-primary transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {t('nav.login')}
-            </Link>
+            {user ? (
+              <Link
+                to="/profile"
+                className="block py-3 text-base font-medium hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t('nav.profile')}
+              </Link>
+            ) : (
+              <Link
+                to="/auth"
+                className="block py-3 text-base font-medium hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t('nav.login')}
+              </Link>
+            )}
           </div>
         </div>
       </div>

@@ -9,6 +9,105 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      ebooks: {
+        Row: {
+          author: string
+          category: string
+          cover_image: string
+          created_at: string | null
+          date_published: string | null
+          description: string
+          discount_price: number | null
+          ebook_id: string
+          file_name: string
+          file_path: string
+          file_size: string | null
+          format: string
+          id: string
+          is_active: boolean | null
+          isbn: string | null
+          language: string | null
+          pages: number | null
+          price: number
+          tags: string[] | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          author: string
+          category: string
+          cover_image: string
+          created_at?: string | null
+          date_published?: string | null
+          description: string
+          discount_price?: number | null
+          ebook_id: string
+          file_name: string
+          file_path: string
+          file_size?: string | null
+          format?: string
+          id?: string
+          is_active?: boolean | null
+          isbn?: string | null
+          language?: string | null
+          pages?: number | null
+          price: number
+          tags?: string[] | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          author?: string
+          category?: string
+          cover_image?: string
+          created_at?: string | null
+          date_published?: string | null
+          description?: string
+          discount_price?: number | null
+          ebook_id?: string
+          file_name?: string
+          file_path?: string
+          file_size?: string | null
+          format?: string
+          id?: string
+          is_active?: boolean | null
+          isbn?: string | null
+          language?: string | null
+          pages?: number | null
+          price?: number
+          tags?: string[] | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          full_name: string | null
+          id: string
+          role: string
+          updated_at: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id: string
+          role?: string
+          updated_at?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id?: string
+          role?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       test_connection: {
         Row: {
           created_at: string | null
