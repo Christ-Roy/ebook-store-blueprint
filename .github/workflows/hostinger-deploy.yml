@@ -1,0 +1,43 @@
+name: Build et déploiement vers Hostinger
+
+on:
+  push:
+    branches:
+      - main  # ou master, selon la branche principale de votre dépôt
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Récupération du code source
+      - name: Checkout du code
+        uses: actions/checkout@v3
+      
+      # Configuration de Node.js
+      - name: Configuration de Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      # Installation des dépendances
+      - name: Installation des dépendances
+        run: npm ci
+        
+      # Build du projet React/Vite
+      - name: Build du projet
+        run: npm run build
+        env:
+          CI: false  # Pour éviter que la compilation s'arrête sur des avertissements
+          
+      # Déploiement sur Hostinger via SSH
+      - name: Déployer sur Hostinger
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rlgoDzvc -i --delete"
+          SOURCE: "build/"  # Correspond à outDir dans vite.config.ts
+          REMOTE_HOST: ${{ secrets.HOSTINGER_HOST }}
+          REMOTE_USER: ${{ secrets.HOSTINGER_USERNAME }}
+          REMOTE_PORT: ${{ secrets.HOSTINGER_PORT }}
+          TARGET: ${{ secrets.HOSTINGER_PATH }}  # Chemin sur le serveur Hostinger

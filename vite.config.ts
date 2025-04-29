@@ -19,4 +19,8 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  base: '/', // URL de base pour le déploiement
+  build: {
+    outDir: 'build', // Répertoire de sortie pour la compilation
+  },
 }));
