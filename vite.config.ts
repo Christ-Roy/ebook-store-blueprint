@@ -22,5 +22,14 @@ export default defineConfig(({ mode }) => ({
   base: '/git-deploy/', // URL de base pour le déploiement dans un sous-répertoire
   build: {
     outDir: 'build', // Répertoire de sortie pour la compilation
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        // Assure un type de fichier standard
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash].[ext]'
+      }
+    }
   },
 }));
