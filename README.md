@@ -16,6 +16,7 @@ Un système complet de vente et distribution d'ebooks avec gestion sécurisée d
 - **Interface administrateur** pour gérer les ebooks et les commandes
 - **Multi-langue** (français et anglais)
 - **Responsive design** pour tous les appareils
+- **Déploiement automatique** vers l'hébergement via GitHub Actions
 
 ## 🛠️ Technologies utilisées
 
@@ -34,6 +35,10 @@ Un système complet de vente et distribution d'ebooks avec gestion sécurisée d
 - **Nodemailer** pour l'envoi d'emails
 - **Mongoose** pour l'ORM
 - **Bcrypt** pour le hachage des mots de passe
+
+### Déploiement
+- **GitHub Actions** pour l'intégration continue et le déploiement
+- **SSH** pour le transfert sécurisé des fichiers vers l'hébergement
 
 ## 📋 Prérequis
 
@@ -130,6 +135,22 @@ npm run dev
 
 L'application sera accessible à l'adresse : [http://localhost:3000](http://localhost:3000)
 
+## 🚀 Déploiement
+
+Le projet est configuré pour un déploiement automatique via GitHub Actions. À chaque push sur la branche principale, l'application est automatiquement:
+1. Construite avec Vite
+2. Déployée sur le serveur d'hébergement via SSH
+
+### Configuration du déploiement
+
+Pour configurer le déploiement automatique, vous devez ajouter les secrets suivants dans votre dépôt GitHub:
+
+- `SSH_PRIVATE_KEY`: Votre clé SSH privée pour l'accès au serveur
+- `HOSTINGER_HOST`: L'adresse IP de votre serveur
+- `HOSTINGER_USERNAME`: Votre nom d'utilisateur SSH
+- `HOSTINGER_PORT`: Le port SSH (généralement 22 ou 65002)
+- `HOSTINGER_PATH`: Le chemin vers le répertoire de déploiement (généralement `/public_html/`)
+
 ## 📁 Structure du projet
 
 ```
@@ -153,6 +174,7 @@ ebook-store-blueprint/
 │   ├── i18n/              # Traductions
 │   ├── lib/               # Bibliothèques et utilitaires
 │   └── pages/             # Pages/routes de l'application
+├── .github/workflows/     # Configuration GitHub Actions
 └── README.md              # Documentation
 ```
 
