@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import LanguageSelector from "./LanguageSelector";
 import { useAuth } from "@/context/AuthContext";
 import { supabase } from "@/lib/supabase/client";
+import { Badge } from "@/components/ui/badge";
 
 const Navbar = () => {
   const { getCartItemsCount } = useCart();
@@ -75,8 +76,12 @@ const Navbar = () => {
               <Link to="/profile" className="flex items-center space-x-1 hover:text-primary transition-colors">
                 {isAdmin ? (
                   <div className="flex items-center">
-                    <ShieldCheck className="h-5 w-5 text-primary" />
-                    <span className="hidden md:inline ml-1">{t('nav.admin')}</span>
+                    <Badge variant="outline" className="flex items-center gap-1 border-primary">
+                      <ShieldCheck className="h-4 w-4 text-primary" />
+                      <span className="hidden md:inline text-primary font-medium">
+                        {t('nav.admin')}
+                      </span>
+                    </Badge>
                   </div>
                 ) : (
                   <div className="flex items-center">
@@ -159,7 +164,17 @@ const Navbar = () => {
                 className="block py-3 text-base font-medium hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {isAdmin ? t('nav.admin') : t('nav.profile')}
+                {isAdmin ? (
+                  <div className="flex items-center">
+                    <ShieldCheck className="h-5 w-5 text-primary mr-2" />
+                    <span className="text-primary font-medium">{t('nav.admin')}</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center">
+                    <User className="h-5 w-5 mr-2" />
+                    <span>{t('nav.profile')}</span>
+                  </div>
+                )}
               </Link>
             ) : (
               <Link
