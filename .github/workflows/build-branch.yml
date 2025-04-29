@@ -28,20 +28,219 @@ jobs:
           CI: false
           VITE_BASE_URL: '/git-deploy/'
           
-      - name: Créer le .htaccess avancé
+      - name: Créer les scripts PHP de compatibilité Hostinger
         run: |
+          # Création du proxy PHP pour servir les fichiers JavaScript
+          cat > build/js-proxy.php << 'EOL'
+          <?php
+          /**
+           * JavaScript Proxy pour Hostinger
+           * Ce script sert à contourner le problème de type MIME sur Hostinger
+           * Il intercepte les requêtes vers les fichiers .js et les sert avec le bon type MIME
+           */
+
+          // Récupération du chemin du fichier demandé depuis l'URL
+          $file_path = isset($_GET['file']) ? $_GET['file'] : null;
+
+          if (!$file_path) {
+              header('HTTP/1.1 400 Bad Request');
+              echo 'Erreur: Paramètre "file" manquant';
+              exit;
+          }
+
+          // Nettoyage du chemin pour prévenir les attaques de traversée de répertoire
+          $file_path = str_replace('../', '', $file_path);
+
+          // Déterminer l'extension réelle en essayant plusieurs possibilités
+          $possible_extensions = ['', '.txt', '.js.txt'];
+          $real_file_path = null;
+
+          foreach ($possible_extensions as $ext) {
+              $test_path = __DIR__ . '/assets/' . $file_path . $ext;
+              if (file_exists($test_path)) {
+                  $real_file_path = $test_path;
+                  break;
+              }
+          }
+
+          // Si le fichier n'existe pas avec aucune des extensions, essayer avec un chemin absolu
+          if (!$real_file_path && file_exists(__DIR__ . '/' . $file_path)) {
+              $real_file_path = __DIR__ . '/' . $file_path;
+          }
+
+          // Vérification que le fichier existe
+          if (!$real_file_path || !file_exists($real_file_path)) {
+              header('HTTP/1.1 404 Not Found');
+              echo 'Erreur: Fichier JavaScript non trouvé';
+              exit;
+          }
+
+          // Vérification qu'il s'agit bien d'un fichier et non d'un répertoire
+          if (!is_file($real_file_path)) {
+              header('HTTP/1.1 403 Forbidden');
+              echo 'Erreur: Le chemin spécifié n\'est pas un fichier';
+              exit;
+          }
+
+          // Déterminer le type MIME en fonction de l'extension réelle du fichier demandé
+          $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+          switch (strtolower($extension)) {
+              case 'js':
+                  $mime_type = 'application/javascript';
+                  break;
+              case 'json':
+                  $mime_type = 'application/json';
+                  break;
+              case 'css':
+                  $mime_type = 'text/css';
+                  break;
+              default:
+                  $mime_type = 'application/javascript'; // Par défaut pour les fichiers sans extension
+          }
+
+          // Configuration des en-têtes pour servir le fichier avec le bon type MIME
+          header('Content-Type: ' . $mime_type . '; charset=utf-8');
+          header('Cache-Control: max-age=31536000, public'); // Cache d'un an pour les performances
+
+          // Protection contre les injections XSS
+          header('X-Content-Type-Options: nosniff');
+
+          // Envoi du contenu du fichier
+          readfile($real_file_path);
+          exit;
+          EOL
+          
+          # Création du script de pré-traitement pour l'index.html
+          cat > build/js-fixer.php << 'EOL'
+          <?php
+          /**
+           * Script de pré-traitement pour index.html
+           * Ce script modifie dynamiquement l'index.html avant de le servir
+           * pour remplacer les imports de modules ES par des scripts standards
+           */
+
+          // Chemin vers le fichier index.html
+          $index_path = __DIR__ . '/index.html';
+
+          // Vérifier que le fichier existe
+          if (!file_exists($index_path)) {
+              echo "Erreur: Fichier index.html introuvable";
+              exit;
+          }
+
+          // Lire le contenu du fichier
+          $html = file_get_contents($index_path);
+
+          // Fonction pour extraire tous les fichiers JavaScript du dossier assets
+          function discover_js_files($dir) {
+              $js_files = [];
+              
+              // Si le dossier assets n'existe pas, retourner un tableau vide
+              if (!is_dir($dir)) {
+                  return $js_files;
+              }
+              
+              // Parcourir tous les fichiers du dossier et ses sous-dossiers
+              $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
+              foreach ($it as $file) {
+                  if ($file->isFile()) {
+                      $path = $file->getPathname();
+                      $ext = pathinfo($path, PATHINFO_EXTENSION);
+                      
+                      // Vérifier si c'est un fichier JavaScript (avec ou sans extension .txt)
+                      if ($ext === 'js' || $ext === 'txt' && strpos($path, '.js.txt') !== false) {
+                          // Extraire le chemin relatif au dossier assets
+                          $relative_path = str_replace($dir . '/', '', $path);
+                          // Supprimer l'extension .txt si présente
+                          $relative_path = str_replace('.txt', '', $relative_path);
+                          $js_files[] = $relative_path;
+                      }
+                  }
+              }
+              
+              return $js_files;
+          }
+
+          // Vérifier la présence de scripts de type module dans l'index.html
+          if (strpos($html, 'type="module"') !== false) {
+              // Trouver les fichiers JavaScript dans le dossier assets
+              $assets_dir = __DIR__ . '/assets';
+              $js_files = discover_js_files($assets_dir);
+              
+              // Récupérer le script principal (généralement le premier script de type module)
+              preg_match('/<script type="module" crossorigin src="([^"]+)"/', $html, $matches);
+              $main_js = isset($matches[1]) ? basename($matches[1]) : null;
+              
+              // Créer du JavaScript pour charger les fichiers via le proxy
+              $js_loader = "\n<script>\n";
+              $js_loader .= "// Script généré automatiquement pour charger les fichiers JavaScript via le proxy PHP\n";
+              $js_loader .= "document.addEventListener('DOMContentLoaded', function() {\n";
+              
+              // Charger tous les fichiers JS découverts
+              foreach ($js_files as $js_file) {
+                  // Nettoyer le nom du fichier pour l'URL
+                  $clean_file = str_replace('.js', '', $js_file);
+                  $js_loader .= "    loadScript('js-proxy.php?file=" . $clean_file . "');\n";
+              }
+              
+              $js_loader .= "});\n\n";
+              $js_loader .= "// Fonction pour charger un script de manière asynchrone\n";
+              $js_loader .= "function loadScript(src) {\n";
+              $js_loader .= "    var script = document.createElement('script');\n";
+              $js_loader .= "    script.src = src;\n";
+              $js_loader .= "    script.async = false; // Important pour préserver l'ordre d'exécution\n";
+              $js_loader .= "    document.head.appendChild(script);\n";
+              $js_loader .= "}\n";
+              $js_loader .= "</script>\n";
+              
+              // Remplacer tous les scripts de type module par un commentaire
+              $html = preg_replace('/<script type="module"[^>]*>.*?<\/script>/s', '<!-- Module script remplacé par le chargeur JS -->', $html);
+              $html = preg_replace('/<script type="module" crossorigin src="[^"]+"[^>]*><\/script>/', '<!-- Module script remplacé par le chargeur JS -->', $html);
+              
+              // Insérer le chargeur JS juste avant la fermeture de </head>
+              $html = str_replace('</head>', $js_loader . '</head>', $html);
+              
+              // Ajouter une note informative en haut de la page (visible uniquement dans le code source)
+              $html = str_replace('<head>', '<head><!-- Index.html modifié par js-fixer.php pour résoudre les problèmes de type MIME sur Hostinger -->', $html);
+          }
+
+          // Servir le HTML modifié
+          header('Content-Type: text/html; charset=utf-8');
+          echo $html;
+          EOL
+          
+          # Création du fichier .htaccess optimisé
           cat > build/.htaccess << 'EOL'
+          # Optimisé pour Hostinger - Solution aux problèmes de types MIME
+          DirectoryIndex js-fixer.php index.html
+
+          # Activer le moteur de réécriture
           <IfModule mod_rewrite.c>
             RewriteEngine On
             RewriteBase /git-deploy/
-            RewriteRule ^index\.html$ - [L]
-            RewriteCond %{REQUEST_FILENAME} !-f
-            RewriteCond %{REQUEST_FILENAME} !-d
-            RewriteCond %{REQUEST_FILENAME} !-l
-            RewriteRule . /git-deploy/index.html [L]
+            
+            # Rediriger l'accès direct à index.html vers js-fixer.php
+            RewriteCond %{THE_REQUEST} \ /+git-deploy/index\.html
+            RewriteRule ^index\.html$ js-fixer.php [L]
+            
+            # Rediriger les fichiers JavaScript vers le proxy PHP
+            RewriteCond %{REQUEST_URI} \.(js|mjs)$ [NC]
+            RewriteRule ^assets/(.*)\.js$ js-proxy.php?file=$1 [L,QSA]
+            
+            # Gérer les fichiers JavaScript auxquels Hostinger a ajouté l'extension .txt
+            RewriteCond %{REQUEST_URI} \.(js|mjs)\.txt$ [NC]
+            RewriteRule ^assets/(.*)\.js\.txt$ js-proxy.php?file=$1 [L,QSA]
+            
+            # Pour tous les autres fichiers statiques, laisser Apache les servir normalement
+            RewriteCond %{REQUEST_FILENAME} -f [OR]
+            RewriteCond %{REQUEST_FILENAME} -d
+            RewriteRule ^ - [L]
+            
+            # Pour les autres URL, rediriger vers index.html (SPA routing)
+            RewriteRule ^ js-fixer.php [L]
           </IfModule>
 
-          # Configuration des types MIME corrects - Méthode 1
+          # Configuration des types MIME (pour les navigateurs qui l'honorent)
           <IfModule mod_mime.c>
             # JavaScript
             AddType application/javascript .js
@@ -58,7 +257,7 @@ jobs:
             AddType text/html .html .htm
           </IfModule>
 
-          # Configuration des types MIME - Méthode 2 avec mod_headers
+          # Forcer les types MIME via les en-têtes HTTP
           <IfModule mod_headers.c>
             <FilesMatch "\.js$">
               Header set Content-Type "application/javascript"
@@ -74,29 +273,73 @@ jobs:
             </FilesMatch>
           </IfModule>
 
-          # Désactivation de toute compression qui pourrait interférer avec les types MIME
-          <IfModule mod_deflate.c>
-            SetEnv no-gzip 1
-          </IfModule>
+          # Empêcher le listage des répertoires
+          Options -Indexes
 
-          # Correction pour certains serveurs qui ajoutent des extensions .txt
-          <IfModule mod_actions.c>
-            Action application/javascript /git-deploy/index.html
-          </IfModule>
+          # Permissions pour PHP
+          <Files "*.php">
+            Require all granted
+          </Files>
 
-          # Définition des permissions de répertoire correctes
-          <IfModule mod_autoindex.c>
-            Options -Indexes
-          </IfModule>
+          # Protection supplémentaire pour les fichiers sensibles
+          <FilesMatch "(^\.|package\.json|package-lock\.json|node_modules)">
+            Order allow,deny
+            Deny from all
+          </FilesMatch>
+          EOL
+          
+          # Création du document d'explication
+          cat > build/hostinger-mime-fix.md << 'EOL'
+          # Solution aux problèmes de MIME Type sur Hostinger pour React/Vite
 
-          # Empêcher la mise en cache des fichiers JavaScript pour le débogage
-          <IfModule mod_expires.c>
-            <FilesMatch "\.js$">
-              ExpiresActive On
-              ExpiresDefault "access plus 0 seconds"
-              Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
-            </FilesMatch>
-          </IfModule>
+          Ce document explique la solution mise en place pour résoudre les problèmes de type MIME rencontrés lors du déploiement d'applications React/Vite sur Hostinger.
+
+          ## Le problème
+
+          Les applications React/Vite modernes utilisent des modules ES6 qui nécessitent que les fichiers JavaScript soient servis avec le type MIME `application/javascript`. Cependant, sur Hostinger, deux problèmes spécifiques surviennent :
+
+          1. Les fichiers JavaScript sont servis avec le type MIME `text/plain` au lieu de `application/javascript`
+          2. Hostinger ajoute automatiquement l'extension `.txt` aux fichiers JavaScript (ex: `main.js` devient `main.js.txt`)
+
+          Cela provoque l'erreur suivante dans la console du navigateur :
+          ```
+          Failed to load module script: Expected a JavaScript module script but the server responded with a MIME type of "text/plain"
+          ```
+
+          ## La solution implémentée
+
+          Nous avons mis en place une solution comprenant trois composants :
+
+          ### 1. js-proxy.php
+
+          Ce script PHP agit comme un proxy pour servir les fichiers JavaScript avec le bon type MIME :
+
+          - Il intercepte les requêtes vers les fichiers JavaScript
+          - Il recherche le fichier demandé avec différentes extensions possibles (.js, .js.txt, etc.)
+          - Il sert le fichier avec l'en-tête Content-Type correct : `application/javascript`
+
+          ### 2. js-fixer.php
+
+          Ce script modifie dynamiquement le fichier index.html avant qu'il ne soit servi au navigateur :
+
+          - Il remplace les imports de modules ES6 par des imports JavaScript standards
+          - Il détecte automatiquement tous les fichiers JavaScript dans le dossier assets
+          - Il génère du code pour charger ces fichiers via le proxy js-proxy.php
+
+          ### 3. Configuration .htaccess
+
+          Le fichier .htaccess est configuré pour :
+
+          - Rediriger l'accès à index.html vers js-fixer.php
+          - Rediriger les requêtes vers les fichiers .js vers js-proxy.php
+          - Gérer le routage SPA pour React Router
+
+          ## Comment cela fonctionne
+
+          1. Quand un utilisateur accède à `https://veridian.site/git-deploy/`, la requête est redirigée vers `js-fixer.php`
+          2. `js-fixer.php` lit le fichier `index.html`, le modifie et renvoie le HTML modifié
+          3. Le HTML modifié contient un script qui charge tous les fichiers JavaScript via `js-proxy.php`
+          4. `js-proxy.php` sert chaque fichier JavaScript avec le bon type MIME
           EOL
 
       - name: Vérifier les permissions des fichiers
