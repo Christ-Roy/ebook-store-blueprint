@@ -28,7 +28,7 @@ jobs:
           CI: false
           VITE_BASE_URL: '/git-deploy/'
           
-      - name: Créer le .htaccess
+      - name: Créer le .htaccess avancé
         run: |
           cat > build/.htaccess << 'EOL'
           <IfModule mod_rewrite.c>
@@ -40,7 +40,8 @@ jobs:
             RewriteCond %{REQUEST_FILENAME} !-l
             RewriteRule . /git-deploy/index.html [L]
           </IfModule>
-          # Configuration des types MIME corrects
+
+          # Configuration des types MIME corrects - Méthode 1
           <IfModule mod_mime.c>
             # JavaScript
             AddType application/javascript .js
@@ -56,7 +57,52 @@ jobs:
             # HTML
             AddType text/html .html .htm
           </IfModule>
+
+          # Configuration des types MIME - Méthode 2 avec mod_headers
+          <IfModule mod_headers.c>
+            <FilesMatch "\.js$">
+              Header set Content-Type "application/javascript"
+            </FilesMatch>
+            <FilesMatch "\.mjs$">
+              Header set Content-Type "application/javascript"
+            </FilesMatch>
+            <FilesMatch "\.json$">
+              Header set Content-Type "application/json"
+            </FilesMatch>
+            <FilesMatch "\.css$">
+              Header set Content-Type "text/css"
+            </FilesMatch>
+          </IfModule>
+
+          # Désactivation de toute compression qui pourrait interférer avec les types MIME
+          <IfModule mod_deflate.c>
+            SetEnv no-gzip 1
+          </IfModule>
+
+          # Correction pour certains serveurs qui ajoutent des extensions .txt
+          <IfModule mod_actions.c>
+            Action application/javascript /git-deploy/index.html
+          </IfModule>
+
+          # Définition des permissions de répertoire correctes
+          <IfModule mod_autoindex.c>
+            Options -Indexes
+          </IfModule>
+
+          # Empêcher la mise en cache des fichiers JavaScript pour le débogage
+          <IfModule mod_expires.c>
+            <FilesMatch "\.js$">
+              ExpiresActive On
+              ExpiresDefault "access plus 0 seconds"
+              Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+            </FilesMatch>
+          </IfModule>
           EOL
+
+      - name: Vérifier les permissions des fichiers
+        run: |
+          chmod -R 644 build/*
+          find build -type d -exec chmod 755 {} \;
 
       - name: Configurer Git
         run: |
