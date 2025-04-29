@@ -1,9 +1,25 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /git-deploy/
-  RewriteRule ^index.html$ - [L]
-  RewriteCond %REQUEST_FILENAME !-f
-  RewriteCond %REQUEST_FILENAME !-d
-  RewriteCond %REQUEST_FILENAME !-l
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-l
   RewriteRule . /git-deploy/index.html [L]
+</IfModule>
+# Configuration des types MIME corrects
+<IfModule mod_mime.c>
+  # JavaScript
+  AddType application/javascript .js
+  AddType application/javascript .mjs
+  AddType text/javascript .js .mjs
+  
+  # JSON
+  AddType application/json .json
+  
+  # CSS
+  AddType text/css .css
+  
+  # HTML
+  AddType text/html .html .htm
 </IfModule>
