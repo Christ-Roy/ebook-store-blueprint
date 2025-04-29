@@ -1,82 +1,30 @@
-# Optimisé pour Hostinger - Solution aux problèmes de types MIME
-DirectoryIndex js-fixer.php index.html
-
-# Activer le moteur de réécriture
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /git-deploy/
   
-  # Rediriger l'accès direct à index.html vers js-fixer.php
-  RewriteCond %{THE_REQUEST} \ /+git-deploy/index\.html
-  RewriteRule ^index\.html$ js-fixer.php [L]
+  # Utiliser js-loader.php comme point d'entrée principal
+  DirectoryIndex js-loader.php index.html
   
-  # Rediriger les fichiers JavaScript vers le proxy PHP
-  RewriteCond %{REQUEST_URI} \.(js|mjs)$ [NC]
-  RewriteRule ^assets/(.*)\.js$ js-proxy.php?file=$1 [L,QSA]
+  # Rediriger les requêtes .js vers le proxy PHP
+  RewriteRule ^(.+)\.js$ js-proxy.php?file=$1.js [L,QSA]
   
-  # Gérer les fichiers JavaScript auxquels Hostinger a ajouté l'extension .txt
-  RewriteCond %{REQUEST_URI} \.(js|mjs)\.txt$ [NC]
-  RewriteRule ^assets/(.*)\.js\.txt$ js-proxy.php?file=$1 [L,QSA]
-  
-  # Pour tous les autres fichiers statiques, laisser Apache les servir normalement
-  RewriteCond %{REQUEST_FILENAME} -f [OR]
-  RewriteCond %{REQUEST_FILENAME} -d
-  RewriteRule ^ - [L]
-  
-  # Pour les autres URL, rediriger vers index.html (SPA routing)
-  RewriteRule ^ js-fixer.php [L]
+  # Gérer les routes SPA pour React
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-l
+  RewriteRule . /git-deploy/js-loader.php [L]
 </IfModule>
 
-# Configuration des types MIME (pour les navigateurs qui l'honorent)
+# Configuration des types MIME (solution de secours)
 <IfModule mod_mime.c>
-  # JavaScript
   AddType application/javascript .js
-  AddType application/javascript .mjs
-  AddType text/javascript .js .mjs
-  
-  # JSON
-  AddType application/json .json
-  
-  # CSS
+  AddType application/javascript .js.txt
+  AddType application/javascript .txt
   AddType text/css .css
-  
-  # HTML
-  AddType text/html .html .htm
 </IfModule>
 
-# Forcer les types MIME via les en-têtes HTTP
 <IfModule mod_headers.c>
-  <FilesMatch "\.js$">
+  <FilesMatch "\.(js|mjs|js\.txt|mjs\.txt|txt)$">
     Header set Content-Type "application/javascript"
   </FilesMatch>
-  <FilesMatch "\.mjs$">
-    Header set Content-Type "application/javascript"
-  </FilesMatch>
-  <FilesMatch "\.json$">
-    Header set Content-Type "application/json"
-  </FilesMatch>
-  <FilesMatch "\.css$">
-    Header set Content-Type "text/css"
-  </FilesMatch>
 </IfModule>
-
-# Désactiver la mise en cache pour le développement (à retirer en production)
-<IfModule mod_headers.c>
-  Header set Cache-Control "no-cache, no-store, must-revalidate"
-  Header set Pragma "no-cache"
-  Header set Expires 0
-</IfModule>
-
-# Empêcher le listage des répertoires
-Options -Indexes
-
-# Permissions pour PHP
-<Files "*.php">
-  Require all granted
-</Files>
-
-# Protection supplémentaire pour les fichiers sensibles
-<FilesMatch "(^\.|package\.json|package-lock\.json|node_modules)">
-  Order allow,deny
-  Deny from all
-</FilesMatch>
