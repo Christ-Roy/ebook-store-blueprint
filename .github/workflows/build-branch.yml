@@ -1,0 +1,53 @@
+name: Build React App pour Hostinger
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v3
+      
+      - name: Configuration de Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Installation des dépendances
+        run: npm ci
+        
+      - name: Build du projet
+        run: npm run build
+        env:
+          CI: false
+          
+      - name: Créer le .htaccess
+        run: |
+          cat > build/.htaccess << 'EOL'
+          <IfModule mod_rewrite.c>
+            RewriteEngine On
+            RewriteBase /
+            RewriteRule ^index\.html$ - [L]
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteCond %{REQUEST_FILENAME} !-d
+            RewriteCond %{REQUEST_FILENAME} !-l
+            RewriteRule . /index.html [L]
+          </IfModule>
+          EOL
+
+      - name: Configurer Git
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          
+      - name: Pousser le dossier build vers la branche build
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build  # Le dossier à déployer
+          branch: build  # La branche cible
+          clean: true  # Nettoie les fichiers existants
