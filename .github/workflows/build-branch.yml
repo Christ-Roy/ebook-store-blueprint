@@ -51,3 +51,4 @@ jobs:
           folder: build  # Le dossier à déployer
           branch: build  # La branche cible
           clean: true  # Nettoie les fichiers existants
+          target-folder: git-deploy  # Ajoute cette ligne pour spécifier un sous-dossier
