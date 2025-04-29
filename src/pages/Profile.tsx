@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { supabase } from "@/lib/supabase/client";
 import Navbar from "@/components/layout/Navbar";
@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
-import { UserType } from "@/lib/supabase/client";
+import { User, ShieldCheck, BookOpen, LogOut } from "lucide-react";
 
 type ProfileType = {
   id: string;
@@ -26,6 +26,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [fullName, setFullName] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -118,8 +119,11 @@ const Profile = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="col-span-1">
               <Card>
-                <CardHeader>
-                  <CardTitle>Informations personnelles</CardTitle>
+                <CardHeader className="space-y-1">
+                  <div className="flex items-center space-x-2">
+                    <User className="h-5 w-5 text-primary" />
+                    <CardTitle>Informations personnelles</CardTitle>
+                  </div>
                   <CardDescription>Gérez vos informations personnelles</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -138,11 +142,25 @@ const Profile = () => {
                   </div>
                   <div>
                     <Label htmlFor="role">Rôle</Label>
-                    <Input id="role" value={profile?.role || "utilisateur"} disabled className="mt-1" />
+                    <div className="flex items-center mt-1">
+                      <Input 
+                        id="role" 
+                        value={profile?.role || "utilisateur"} 
+                        disabled 
+                        className={`${profile?.role === 'admin' ? 'text-primary font-medium' : ''}`}
+                      />
+                      {profile?.role === 'admin' && <ShieldCheck className="h-5 w-5 text-primary ml-2" />}
+                    </div>
+                    {profile?.role === 'admin' && (
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Vous avez les privilèges d'administration sur la plateforme.
+                      </p>
+                    )}
                   </div>
                 </CardContent>
                 <CardFooter className="flex justify-between">
-                  <Button variant="outline" onClick={handleSignOut}>
+                  <Button variant="outline" onClick={handleSignOut} className="flex items-center">
+                    <LogOut className="h-4 w-4 mr-2" />
                     Déconnexion
                   </Button>
                   <Button onClick={handleUpdateProfile} disabled={isUpdating}>
@@ -153,28 +171,40 @@ const Profile = () => {
             </div>
             
             <div className="col-span-1 md:col-span-2">
+              {profile?.role === 'admin' && (
+                <Card className="mb-6">
+                  <CardHeader>
+                    <div className="flex items-center space-x-2">
+                      <ShieldCheck className="h-5 w-5 text-primary" />
+                      <CardTitle>Administration</CardTitle>
+                    </div>
+                    <CardDescription>Panneau d'administration des ebooks</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="mb-4">En tant qu'administrateur, vous avez accès à la gestion complète des ebooks.</p>
+                    <Button 
+                      onClick={() => navigate("/admin/ebooks")}
+                      className="flex items-center"
+                    >
+                      <BookOpen className="h-4 w-4 mr-2" />
+                      Gérer les ebooks
+                    </Button>
+                  </CardContent>
+                </Card>
+              )}
+
               <Card>
                 <CardHeader>
-                  <CardTitle>Mes commandes</CardTitle>
+                  <div className="flex items-center space-x-2">
+                    <BookOpen className="h-5 w-5 text-primary" />
+                    <CardTitle>Mes commandes</CardTitle>
+                  </div>
                   <CardDescription>Historique de vos achats</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">Vous n'avez pas encore effectué d'achats.</p>
                 </CardContent>
               </Card>
-              
-              {profile?.role === 'admin' && (
-                <Card className="mt-6">
-                  <CardHeader>
-                    <CardTitle>Administration</CardTitle>
-                    <CardDescription>Panneau d'administration (réservé aux administrateurs)</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="mb-4">En tant qu'administrateur, vous avez accès à la gestion complète des ebooks.</p>
-                    <Button>Gérer les ebooks</Button>
-                  </CardContent>
-                </Card>
-              )}
             </div>
           </div>
         )}

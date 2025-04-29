@@ -19,6 +19,7 @@ import Terms from "./pages/Terms";
 import FAQ from "./pages/FAQ";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
+import EbookManager from "./pages/admin/EbookManager";
 import DownloadPage from "./pages/download/DownloadPage";
 import OrderConfirmation from "./pages/checkout/OrderConfirmation";
 import "@/i18n";
@@ -46,6 +47,7 @@ const App = () => (
               <Route path="/faq" element={<FAQ />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/admin/ebooks" element={<EbookManager />} />
               <Route path="/download/:token" element={<DownloadPage />} />
               <Route path="/orders/:orderId" element={<OrderConfirmation />} />
               <Route path="*" element={<NotFound />} />

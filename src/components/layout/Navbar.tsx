@@ -1,13 +1,14 @@
 
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Menu, X, LogIn, User } from "lucide-react";
+import { ShoppingCart, Menu, X, LogIn, User, ShieldCheck } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "./LanguageSelector";
 import { useAuth } from "@/context/AuthContext";
+import { supabase } from "@/lib/supabase/client";
 
 const Navbar = () => {
   const { getCartItemsCount } = useCart();
@@ -15,6 +16,27 @@ const Navbar = () => {
   const { t } = useTranslation();
   const { user } = useAuth();
   const itemCount = getCartItemsCount();
+  const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  // Vérifier si l'utilisateur est admin
+  useEffect(() => {
+    if (user) {
+      const checkAdminStatus = async () => {
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .single();
+        
+        if (!error && data) {
+          setIsAdmin(data.role === 'admin');
+        }
+      };
+      
+      checkAdminStatus();
+    }
+  }, [user]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -49,10 +71,21 @@ const Navbar = () => {
           <LanguageSelector />
           
           {user ? (
-            <Link to="/profile" className="flex items-center space-x-2 hover:text-primary transition-colors">
-              <User className="h-5 w-5" />
-              <span className="hidden md:inline">{t('nav.profile')}</span>
-            </Link>
+            <>
+              <Link to="/profile" className="flex items-center space-x-1 hover:text-primary transition-colors">
+                {isAdmin ? (
+                  <div className="flex items-center">
+                    <ShieldCheck className="h-5 w-5 text-primary" />
+                    <span className="hidden md:inline ml-1">{t('nav.admin')}</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center">
+                    <User className="h-5 w-5" />
+                    <span className="hidden md:inline ml-1">{t('nav.profile')}</span>
+                  </div>
+                )}
+              </Link>
+            </>
           ) : (
             <Link to="/auth" className="flex items-center space-x-2 hover:text-primary transition-colors">
               <LogIn className="h-5 w-5" />
@@ -126,7 +159,7 @@ const Navbar = () => {
                 className="block py-3 text-base font-medium hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {t('nav.profile')}
+                {isAdmin ? t('nav.admin') : t('nav.profile')}
               </Link>
             ) : (
               <Link
