@@ -23,8 +23,10 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: 'build', // Répertoire de sortie pour la compilation
     assetsDir: 'assets',
+    target: 'es2015', // Cible une version plus ancienne de JavaScript pour une meilleure compatibilité
     rollupOptions: {
       output: {
+        format: 'iife', // Utilise IIFE au lieu de ESM pour éviter les problèmes de type MIME
         // Assure un type de fichier standard
         entryFileNames: 'assets/[name].[hash].js',
         chunkFileNames: 'assets/[name].[hash].js',
