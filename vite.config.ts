@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: '/', // URL de base pour le déploiement
+  base: '/git-deploy/', // URL de base pour le déploiement dans un sous-répertoire
   build: {
     outDir: 'build', // Répertoire de sortie pour la compilation
   },
