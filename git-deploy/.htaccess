@@ -1,14 +1,33 @@
+# Optimisé pour Hostinger - Solution aux problèmes de types MIME
+DirectoryIndex js-fixer.php index.html
+
+# Activer le moteur de réécriture
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /git-deploy/
-  RewriteRule ^index\.html$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_FILENAME} !-l
-  RewriteRule . /git-deploy/index.html [L]
+  
+  # Rediriger l'accès direct à index.html vers js-fixer.php
+  RewriteCond %{THE_REQUEST} \ /+git-deploy/index\.html
+  RewriteRule ^index\.html$ js-fixer.php [L]
+  
+  # Rediriger les fichiers JavaScript vers le proxy PHP
+  RewriteCond %{REQUEST_URI} \.(js|mjs)$ [NC]
+  RewriteRule ^assets/(.*)\.js$ js-proxy.php?file=$1 [L,QSA]
+  
+  # Gérer les fichiers JavaScript auxquels Hostinger a ajouté l'extension .txt
+  RewriteCond %{REQUEST_URI} \.(js|mjs)\.txt$ [NC]
+  RewriteRule ^assets/(.*)\.js\.txt$ js-proxy.php?file=$1 [L,QSA]
+  
+  # Pour tous les autres fichiers statiques, laisser Apache les servir normalement
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+  
+  # Pour les autres URL, rediriger vers index.html (SPA routing)
+  RewriteRule ^ js-fixer.php [L]
 </IfModule>
 
-# Configuration des types MIME corrects - Méthode 1
+# Configuration des types MIME (pour les navigateurs qui l'honorent)
 <IfModule mod_mime.c>
   # JavaScript
   AddType application/javascript .js
@@ -25,7 +44,7 @@
   AddType text/html .html .htm
 </IfModule>
 
-# Configuration des types MIME - Méthode 2 avec mod_headers
+# Forcer les types MIME via les en-têtes HTTP
 <IfModule mod_headers.c>
   <FilesMatch "\.js$">
     Header set Content-Type "application/javascript"
@@ -41,26 +60,23 @@
   </FilesMatch>
 </IfModule>
 
-# Désactivation de toute compression qui pourrait interférer avec les types MIME
-<IfModule mod_deflate.c>
-  SetEnv no-gzip 1
+# Désactiver la mise en cache pour le développement (à retirer en production)
+<IfModule mod_headers.c>
+  Header set Cache-Control "no-cache, no-store, must-revalidate"
+  Header set Pragma "no-cache"
+  Header set Expires 0
 </IfModule>
 
-# Correction pour certains serveurs qui ajoutent des extensions .txt
-<IfModule mod_actions.c>
-  Action application/javascript /git-deploy/index.html
-</IfModule>
+# Empêcher le listage des répertoires
+Options -Indexes
 
-# Définition des permissions de répertoire correctes
-<IfModule mod_autoindex.c>
-  Options -Indexes
-</IfModule>
+# Permissions pour PHP
+<Files "*.php">
+  Require all granted
+</Files>
 
-# Empêcher la mise en cache des fichiers JavaScript pour le débogage
-<IfModule mod_expires.c>
-  <FilesMatch "\.js$">
-    ExpiresActive On
-    ExpiresDefault "access plus 0 seconds"
-    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
-  </FilesMatch>
-</IfModule>
+# Protection supplémentaire pour les fichiers sensibles
+<FilesMatch "(^\.|package\.json|package-lock\.json|node_modules)">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
