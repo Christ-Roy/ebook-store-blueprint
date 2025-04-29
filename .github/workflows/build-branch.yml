@@ -17,6 +17,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+          cache: 'npm'
           
       - name: Installation des dépendances
         run: npm ci
@@ -25,6 +26,7 @@ jobs:
         run: npm run build
         env:
           CI: false
+          VITE_BASE_URL: '/git-deploy/'
           
       - name: Créer le .htaccess
         run: |
@@ -48,7 +50,7 @@ jobs:
       - name: Pousser le dossier build vers la branche build
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: build  # Le dossier à déployer
+          folder: build  # Le dossier à déployer (configuré dans vite.config.ts)
           branch: build  # La branche cible
           clean: true  # Nettoie les fichiers existants
-          target-folder: git-deploy  # Ajoute cette ligne pour spécifier un sous-dossier
+          target-folder: git-deploy  # Spécifie le sous-dossier pour le déploiement
